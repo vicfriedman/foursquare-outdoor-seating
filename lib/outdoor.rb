@@ -1,18 +1,18 @@
 require 'HTTParty'
 
 class Neighborhood
-  CLIENT_ID = 'KXSEM1VPP4MXSEWX1UZCLMHONDUF5CLAHH2G4CFZUOBL1NUD'
-  CLIENT_SECRET = 'VYJTGNTSNT1OHG0AURLNS0DVXPS5GKBMSW0QBKFFAFK3NMAU'
   
-  attr_accessor :location, :venues, :outdoor_venues
+  attr_accessor :location, :venues, :outdoor_venues, :client_id, :client_secret
 
-  def initialize(location)
+  def initialize(location, secret, id)
+    @client_secret = secret
+    @client_id = id
     @location = location
     @outdoor_venues = []
   end
 
   def search
-    uri = "https://api.foursquare.com/v2/venues/explore?near=#{@location}&client_id=#{CLIENT_ID}&client_secret=#{CLIENT_SECRET}&v=#{Time.now.strftime("%Y%m%d")}&categoryId=4d4b7105d754a06374d81259"
+    uri = "https://api.foursquare.com/v2/venues/explore?near=#{@location}&client_id=#{@client_id}&client_secret=#{@client_secret}&v=#{Time.now.strftime("%Y%m%d")}&categoryId=4d4b7105d754a06374d81259"
     encoded = URI.parse(URI.encode(uri)) #to handle spaces in the location
     @venues = HTTParty.get(encoded)['response']['groups'][0]["items"]
   end
@@ -24,7 +24,7 @@ class Neighborhood
     end
     @venues = []
     ids.each do |i|
-      @venues << HTTParty.get("https://api.foursquare.com/v2/venues/#{i}?client_id=#{CLIENT_ID}&client_secret=#{CLIENT_SECRET}&v=#{Time.now.strftime("%Y%m%d")}&m=foursquare")
+      @venues << HTTParty.get("https://api.foursquare.com/v2/venues/#{i}?client_id=#{@client_id}&client_secret=#{@client_secret}&v=#{Time.now.strftime("%Y%m%d")}&m=foursquare")
     end
   end
 
@@ -45,7 +45,7 @@ class Neighborhood
 
 end
 
-c = Neighborhood.new("West Village, New York, NY")
-c.search
-c.venue_ids
-c.check_outdoor
+# c = Neighborhood.new("West Village, New York, NY")
+# c.search
+# c.venue_ids
+# c.check_outdoor

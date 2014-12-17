@@ -1,9 +1,23 @@
-<h1> yo. i wanna sit outside and code. where should i do go?</h1>
+<!doctype html>
+<head>
+  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js?ver=1.7.0'></script>
+  <link rel="stylesheet" type="style/css" href="css/style.css">
+  <title> Outdoor Seating </title>
+</head>
+<body>
 
-<form action="/results" method="post">
+  <h1> yo. i wanna sit outside and code. where should i do go?</h1>
+
+    <form action="/results" method="post">
       <p>
         <label for="neighborhood">What neighborhood?:</label>
         <input type="text" name="neighborhood">
       </p>
-      <input type="submit" value="Check my neighborhood!">
+      <input type="submit" id="submit"value="Check my neighborhood!">
     </form>
+
+<script type="text/javascript" src="js/magic.js"></script>
+  <div id="spinner">
+  </div>
+</body>
+
